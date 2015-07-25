@@ -6,7 +6,7 @@
 -export([add_message/4]).
 
 -export([read_message/2]).
--export([read_and_write_message/2]).
+-export([read_and_write_message/1, read_and_write_message/2]).
 
 -export([check_message_fit/2]).
 -export([check_message_fit/3]).
@@ -46,6 +46,11 @@ read_and_write_message(InFile, OutFile) ->
   %%   erlang:list_to_binary call before its return.
   Msg = read_message(InFile, as_list),
   ok = file:write_file(OutFile, Msg).
+
+read_and_write_message(InFile) ->
+  %%  only return the binary output from read_message/2
+  read_message(InFile, as_binary).
+
 
 %%%
 check_message_fit(Msg, InFile) ->
@@ -92,6 +97,3 @@ add_and_read_tester(Msg, OutputFormat) ->
   ok.
 
 -endif.
-
-
-
